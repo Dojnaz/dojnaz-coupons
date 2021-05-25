@@ -70,19 +70,6 @@ export default {
             ],
           },
         ],
-        "About",
-        [
-          {
-            href: "https://admin-null.justboil.me",
-            label: "Premium Demo",
-            icon: "credit-card",
-          },
-          {
-            href: "https://justboil.me/bulma-admin-template/null",
-            label: "About",
-            icon: "help-circle",
-          },
-        ],
       ];
     },
   },
@@ -90,7 +77,8 @@ export default {
     this.$store.commit("user", {
       name: "Victor Bäck",
       email: "vb@dojnaz.net",
-      avatar: "https://cdn.discordapp.com/avatars/706902380637192212/360f70d04f20b1d4775b95f7324e3752.png?size=256",
+      avatar:
+        "https://cdn.discordapp.com/avatars/706902380637192212/360f70d04f20b1d4775b95f7324e3752.png?size=256",
     });
   },
   methods: {
