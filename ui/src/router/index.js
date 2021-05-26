@@ -49,20 +49,11 @@ const routes = [
   },
   {
     meta: {
-      title: 'New client'
+      title: 'Auth'
     },
-    path: '/client/new',
-    name: 'client.new',
-    component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue')
-  },
-  {
-    meta: {
-      title: 'Edit client'
-    },
-    path: '/client/:id',
-    name: 'client.edit',
-    component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue'),
-    props: true
+    path: '/auth',
+    name: 'auth',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Auth.vue')
   }
 ]
 

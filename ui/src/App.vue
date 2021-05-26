@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <nav-bar />
-    <aside-menu :menu="menu" @menu-click="menuClick" />
+    <template v-if="$router.currentRoute.path != '/auth'">
+      <nav-bar />
+      <aside-menu :menu="menu" @menu-click="menuClick" />
+    </template>
     <router-view />
     <footer-bar />
   </div>
@@ -21,7 +23,7 @@ export default {
     NavBar,
   },
   mounted() {
-    window.$buefy = this.$buefy
+    window.$buefy = this.$buefy;
   },
   computed: {
     menu() {

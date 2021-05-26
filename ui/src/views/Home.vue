@@ -47,21 +47,16 @@
 </template>
 
 <script>
-import * as chartConfig from "@/components/Charts/chart.config";
 import TitleBar from "@/components/TitleBar";
 import HeroBar from "@/components/HeroBar";
 import Tiles from "@/components/Tiles";
 import CardWidget from "@/components/CardWidget";
 import CardComponent from "@/components/CardComponent";
-import LineChart from "@/components/Charts/LineChart";
-import ClientsTableSample from "@/components/ClientsTableSample";
 import CouponCard from "@/components/CouponCard";
 
 export default {
   name: "home",
   components: {
-    ClientsTableSample,
-    LineChart,
     CardComponent,
     CardWidget,
     Tiles,
@@ -78,10 +73,6 @@ export default {
     },
   },
   mounted() {
-    /*this.$buefy.snackbar.open({
-      message: "Welcome back",
-      queue: false,
-    });*/
     this.$store.dispatch("getCouponTypes");
   },
   methods: {},
