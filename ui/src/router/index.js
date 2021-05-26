@@ -27,6 +27,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "tables" */ '../views/Tables.vue')
   },
   {
+    path: '/coupons/:slug',
+    name: 'couponPage',
+    component: () => import(/* webpackChunkName: "couponPage" */ '../views/CouponPage.vue')
+  },
+  {
     meta: {
       title: 'Forms'
     },
@@ -65,7 +70,7 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else {

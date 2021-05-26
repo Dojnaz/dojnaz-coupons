@@ -1,5 +1,9 @@
 <template>
-  <div class="card is-clickable column is-one-quarter">
+  <div
+    class="card is-clickable column is-one-quarter"
+    v-if="!(title == '' || title == undefined)"
+    v-on:click="click"
+  >
     <div class="card-content">
       <div class="content">
         <b-skeleton v-if="skeleton" height="25px" />
@@ -37,6 +41,11 @@ export default {
     slug: String,
     skeleton: false,
   },
+  methods: {
+    click() {
+      this.$router.push("/coupons/" + this.slug);
+    },
+  },
 };
 </script>
 
@@ -56,6 +65,6 @@ export default {
 <style>
 .b-skeleton,
 .b-skeleton-item {
-  height: 100%;
+  height: calc(100% - 37px);
 }
 </style>

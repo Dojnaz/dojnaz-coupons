@@ -35,3 +35,4 @@ new Vue({
 
 window.$router = router
 window.$store = store
+//window.$buefy = Buefy

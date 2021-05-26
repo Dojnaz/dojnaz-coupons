@@ -22,7 +22,12 @@ export default new Vuex.Store({
     /* Dark mode */
     isDarkModeActive: false,
 
-    couponTypes: []
+    couponTypes: [],
+    stats: {
+      unused: 420,
+      claimed: 1337,
+      balance: 69
+    }
   },
   mutations: {
     /* A fit-them-all commit */
@@ -63,7 +68,7 @@ export default new Vuex.Store({
 
     couponTypes(state, payload) {
       let toAdd = payload.length
-      for (let i = 0; i < (4-(toAdd%4))%4; i++) payload.push({})
+      for (let i = 0; i < (4 - (toAdd % 4)) % 4; i++) payload.push({})
       state.couponTypes = payload
     }
   },
@@ -72,8 +77,14 @@ export default new Vuex.Store({
       axios()
     },
     getCouponTypes({ commit }) {
-      axios('/couponTypes').then(({data}) => {
+      axios('/couponTypes').then(({ data }) => {
         commit("couponTypes", data)
+      }).catch(() => {
+        $buefy.snackbar.open({
+          message: "Unable to fetch Coupon Types",
+          queue: false,
+          type: 'is-danger'
+        });
       })
     }
   },

@@ -20,6 +20,9 @@ export default {
     AsideMenu,
     NavBar,
   },
+  mounted() {
+    window.$buefy = this.$buefy
+  },
   computed: {
     menu() {
       return [
