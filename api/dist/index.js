@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const routes_1 = __importDefault(require("./routes"));
 const queue = [];
 const app = express_1.default();
 const allowedOrigins = [
@@ -17,13 +18,13 @@ app.use(cors_1.default({
         if (!origin)
             return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
-            var msg = 'The CORS policy for this site does not ' +
-                'allow access from the specified Origin.';
+            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
             return callback(new Error(msg), false);
         }
         return callback(null, true);
     }
 }));
+app.use(routes_1.default);
 app.get('/', (req, res) => {
     res.send('Hi!');
 });

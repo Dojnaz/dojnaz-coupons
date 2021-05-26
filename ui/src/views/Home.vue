@@ -29,21 +29,10 @@
       </tiles>
 
       <tiles class="is-centered">
-        <card class="card is-clickable">
-          <div class="card-content">
-            <div class="content">
-              <h1 class="title has-text-centered is-4 m-0">Free Coca-Cola Energy (2kr)</h1>
-            </div>
-          </div>
-          <div class="card-image">
-            <figure class="image is-4by2">
-              <img
-                src="https://3.kupong.se/uploaded-images/coupon/Coke_Energy_new-480x675-Swedish.jpg"
-                alt="Coca-Cola Energy Poster"
-              />
-            </figure>
-          </div>
-        </card>
+        <CouponCard
+          title="Free Coca-Cola Energy (2kr)"
+          img="https://3.kupong.se/uploaded-images/coupon/Coke_Energy_new-480x675-Swedish.jpg"
+        />
       </tiles>
 
       <!--<card-component
@@ -80,6 +69,7 @@ import CardWidget from "@/components/CardWidget";
 import CardComponent from "@/components/CardComponent";
 import LineChart from "@/components/Charts/LineChart";
 import ClientsTableSample from "@/components/ClientsTableSample";
+import CouponCard from "@/components/CouponCard";
 
 export default {
   name: "home",
@@ -91,14 +81,10 @@ export default {
     Tiles,
     HeroBar,
     TitleBar,
+    CouponCard,
   },
   data() {
-    return {
-      defaultChart: {
-        chartData: null,
-        extraOptions: chartConfig.chartOptionsMain,
-      },
-    };
+    return {};
   },
   computed: {
     titleStack() {
@@ -106,75 +92,11 @@ export default {
     },
   },
   mounted() {
-    this.fillChartData();
-
     this.$buefy.snackbar.open({
       message: "Welcome back",
-      queue: false,
+      queue: false
     });
   },
-  methods: {
-    randomChartData(n) {
-      const data = [];
-
-      for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 200));
-      }
-
-      return data;
-    },
-    fillChartData() {
-      this.defaultChart.chartData = {
-        datasets: [
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9),
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.info,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9),
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.danger,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9),
-          },
-        ],
-        labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
-      };
-    },
-  },
+  methods: {},
 };
 </script>

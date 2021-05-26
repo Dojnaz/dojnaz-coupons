@@ -12,7 +12,7 @@
         <div class="level-right">
           <div class="level-item">
             <div class="logo">
-              <a href="https://justboil.me">
+              <a href="https://dojnaz.net" target="_blank">
                 <img src="https://dojnaz.net/cdn/dojnaz.png">
               </a>
             </div>
