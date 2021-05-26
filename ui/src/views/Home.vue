@@ -28,34 +28,12 @@
         />
       </tiles>
 
-      <tiles class="is-centered">
+      <tiles class="is-centered columns">
         <CouponCard
-          title="Free Coca-Cola Energy (2kr)"
-          img="https://3.kupong.se/uploaded-images/coupon/Coke_Energy_new-480x675-Swedish.jpg"
+          :skeleton="true"
         />
+        <CouponCard v-for="type in $store.state.couponTypes" :key="type.slug" :slug="type.slug" :title="type.title" :img="type.img" />
       </tiles>
-
-      <!--<card-component
-        title="Performance"
-        @header-icon-click="fillChartData"
-        icon="finance"
-        header-icon="reload"
-      >
-        <div v-if="defaultChart.chartData" class="chart-area">
-          <line-chart
-            style="height: 100%"
-            ref="bigChart"
-            chart-id="big-line-chart"
-            :chart-data="defaultChart.chartData"
-            :extra-options="defaultChart.extraOptions"
-          >
-          </line-chart>
-        </div>
-      </card-component>-->
-
-      <!--<card-component title="Clients" class="has-table has-mobile-sort-spaced">
-        <clients-table-sample :data-url="`${$router.options.base}data-sources/clients.json`"/>
-      </card-component>-->
     </section>
   </div>
 </template>
@@ -96,6 +74,7 @@ export default {
       message: "Welcome back",
       queue: false
     });
+    this.$store.dispatch("getCouponTypes")
   },
   methods: {},
 };

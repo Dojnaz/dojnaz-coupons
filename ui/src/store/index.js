@@ -20,7 +20,9 @@ export default new Vuex.Store({
     isAsideMobileExpanded: false,
 
     /* Dark mode */
-    isDarkModeActive: false
+    isDarkModeActive: false,
+
+    couponTypes: []
   },
   mutations: {
     /* A fit-them-all commit */
@@ -57,11 +59,20 @@ export default new Vuex.Store({
       }
 
       state.isAsideMobileExpanded = isShow
+    },
+
+    couponTypes(state, payload) {
+      state.couponTypes = payload
     }
   },
   actions: {
     getUsername({ commit }) {
       axios()
+    },
+    getCouponTypes({ commit }) {
+      axios('/couponTypes').then(({data}) => {
+        commit("couponTypes", data)
+      })
     }
   },
   modules: {

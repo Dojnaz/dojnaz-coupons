@@ -34,3 +34,4 @@ new Vue({
 }).$mount('#app')
 
 window.$router = router
+window.$store = store
