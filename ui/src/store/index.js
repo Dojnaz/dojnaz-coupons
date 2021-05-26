@@ -62,6 +62,8 @@ export default new Vuex.Store({
     },
 
     couponTypes(state, payload) {
+      let toAdd = payload.length
+      for (let i = 0; i < (4-(toAdd%4))%4; i++) payload.push({})
       state.couponTypes = payload
     }
   },
