@@ -1,12 +1,12 @@
-import '@/scss/main.scss'
-import 'buefy/dist/buefy.css'
-
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import Buefy from 'buefy'
 import axios from 'axios'
+
+import('@/scss/main.scss')
+import('buefy/dist/buefy.css')
 
 const defaultDocumentTitle = 'Dojnaz Coupons'
 
