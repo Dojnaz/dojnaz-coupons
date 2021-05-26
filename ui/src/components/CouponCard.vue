@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card is-clickable column is-one-quarter"
+    class="card is-clickable column"
     v-if="!(title == '' || title == undefined)"
     v-on:click="click"
   >
