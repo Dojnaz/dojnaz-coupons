@@ -12,7 +12,7 @@
       <figure class="image is-4by2" v-if="!skeleton">
         <img :src="img" :alt="title" />
       </figure>
-      <b-skeleton class="imgSkel" v-if="skeleton" height="100%"/>
+      <b-skeleton class="imgSkel" v-if="skeleton"/>
     </div>
   </div>
 </template>
@@ -41,5 +41,15 @@ export default {
 <style scoped>
 .card {
   width: 100%;
+  min-height: 350px;
+}
+.card-image,.imgSkel {
+  height: 100%;
+}
+</style>
+
+<style>
+.b-skeleton,.b-skeleton-item {
+  height: 100%;
 }
 </style>

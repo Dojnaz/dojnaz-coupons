@@ -28,11 +28,22 @@
         />
       </tiles>
 
+      <tiles class="is-centered columns" v-if="$store.state.couponTypes.length == 0">
+        <template>
+          <CouponCard :skeleton="true" />
+          <CouponCard :skeleton="true" />
+          <CouponCard :skeleton="true" />
+          <CouponCard :skeleton="true" />
+        </template>
+      </tiles>
       <tiles class="is-centered columns">
         <CouponCard
-          :skeleton="true"
+          v-for="type in $store.state.couponTypes"
+          :key="type.slug"
+          :slug="type.slug"
+          :title="type.title"
+          :img="type.img"
         />
-        <CouponCard v-for="type in $store.state.couponTypes" :key="type.slug" :slug="type.slug" :title="type.title" :img="type.img" />
       </tiles>
     </section>
   </div>
@@ -72,9 +83,9 @@ export default {
   mounted() {
     this.$buefy.snackbar.open({
       message: "Welcome back",
-      queue: false
+      queue: false,
     });
-    this.$store.dispatch("getCouponTypes")
+    this.$store.dispatch("getCouponTypes");
   },
   methods: {},
 };
