@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -9,7 +10,8 @@ const routes = [
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      requiresAuth: true
     },
     path: '/',
     name: 'home',
@@ -17,7 +19,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Tables'
+      title: 'Tables',
+      requiresAuth: true
     },
     path: '/tables',
     name: 'tables',
@@ -27,13 +30,17 @@ const routes = [
     component: () => import(/* webpackChunkName: "tables" */ '../views/Tables.vue')
   },
   {
+    meta: {
+      requiresAuth: true
+    },
     path: '/coupons/:slug',
     name: 'couponPage',
     component: () => import(/* webpackChunkName: "couponPage" */ '../views/CouponPage.vue')
   },
   {
     meta: {
-      title: 'Forms'
+      title: 'Forms',
+      requiresAuth: true
     },
     path: '/forms',
     name: 'forms',
@@ -41,7 +48,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Profile'
+      title: 'Profile',
+      requiresAuth: true
     },
     path: '/profile',
     name: 'profile',
@@ -68,6 +76,20 @@ const router = new VueRouter({
       return { x: 0, y: 0 }
     }
   }
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    await store.dispatch('init')
+    $store.commit('setLoading', false)
+
+    if (store.state.userName) {
+      return next();
+    }
+    return $router.push("/auth")
+  }
+  $store.commit('setLoading', false)
+  return next()
 })
 
 export default router

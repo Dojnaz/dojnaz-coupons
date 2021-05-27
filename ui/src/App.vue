@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="vld-parent">
+    <loading :active="$store.state.isLoading" :can-cancel="false" :is-full-page="true" />
     <template v-if="$router.currentRoute.path != '/auth'">
       <nav-bar />
       <aside-menu :menu="menu" @menu-click="menuClick" />
@@ -14,6 +15,8 @@
 import NavBar from "@/components/NavBar";
 import AsideMenu from "@/components/AsideMenu";
 import FooterBar from "@/components/FooterBar";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "home",
@@ -21,9 +24,15 @@ export default {
     FooterBar,
     AsideMenu,
     NavBar,
+    Loading,
   },
   mounted() {
     window.$buefy = this.$buefy;
+  },
+  data() {
+    return {
+      isLoading: true,
+    };
   },
   computed: {
     menu() {
@@ -79,12 +88,12 @@ export default {
     },
   },
   created() {
-    this.$store.commit("user", {
+    /*this.$store.commit("user", {
       name: "Victor Bäck",
       email: "vb@dojnaz.net",
       avatar:
         "https://cdn.discordapp.com/avatars/706902380637192212/360f70d04f20b1d4775b95f7324e3752.png?size=256",
-    });
+    });*/
   },
   methods: {
     menuClick(item) {

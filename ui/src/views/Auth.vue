@@ -76,12 +76,17 @@ import HeroBar from "@/components/HeroBar";
 import Tiles from "@/components/Tiles";
 
 export default {
-  name: "Profile",
+  name: "Auth",
   components: {
     Tiles,
     HeroBar,
     TitleBar,
     CardComponent,
+  },
+  data() {
+    return {
+      isLoading: false
+    }
   },
   computed: {
     titleStack() {

@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -27,7 +28,8 @@ export default new Vuex.Store({
       unused: 420,
       claimed: 1337,
       balance: 69
-    }
+    },
+    isLoading: true
   },
   mutations: {
     /* A fit-them-all commit */
@@ -43,6 +45,7 @@ export default new Vuex.Store({
       if (payload.avatar) {
         state.userAvatar = payload.avatar
       }
+      state.isLoading = false
     },
 
     /* Aside Mobile */
@@ -70,6 +73,10 @@ export default new Vuex.Store({
       let toAdd = payload.length
       for (let i = 0; i < (4 - (toAdd % 4)) % 4; i++) payload.push({})
       state.couponTypes = payload
+    },
+
+    setLoading(state, payload = false) {
+      state.isLoading = payload
     }
   },
   actions: {
@@ -86,6 +93,26 @@ export default new Vuex.Store({
           type: 'is-danger'
         });
       })
+    },
+    async init({ commit }) {
+      console.log(1)
+      if (!localStorage.token) {
+        commit('user', {
+          name: null
+        })
+        return
+      }
+      axios.defaults.headers.common['Authorization'] = localStorage.token
+      try {
+        const { data } = await axios.get('/me')
+        commit('user', data)
+      } catch (err) {
+        $buefy.snackbar.open({
+          message: "Unable to fetch user!",
+          queue: false,
+          type: 'is-danger'
+        });
+      }
     }
   },
   modules: {

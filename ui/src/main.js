@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store'
-import Buefy from 'buefy'
+import router from './router'
 import axios from 'axios'
+import Buefy from 'buefy'
+import './registerServiceWorker'
 
 import('@/scss/main.scss')
 import('buefy/dist/buefy.css')
@@ -27,12 +28,13 @@ Vue.config.productionTip = false
 
 Vue.use(Buefy)
 
+window.$store = store
+window.$router = router
+
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')
 
-window.$router = router
-window.$store = store
 //window.$buefy = Buefy

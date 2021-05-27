@@ -4,10 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const couponTypes_1 = __importDefault(require("./couponTypes"));
-const me_1 = __importDefault(require("./me"));
 const Router = express_1.default.Router();
-Router.use('/couponTypes', couponTypes_1.default);
-Router.use('/me', me_1.default);
+Router.get('/', (req, res) => {
+    setTimeout(() => {
+        res.json({
+            name: "Victor Bäck",
+            avatar: "https://cdn.discordapp.com/avatars/706902380637192212/360f70d04f20b1d4775b95f7324e3752.png?size=64"
+        });
+    }, 1000);
+});
 exports.default = Router;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=me.js.map
