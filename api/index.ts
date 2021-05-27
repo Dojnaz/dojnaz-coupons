@@ -2,7 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 
+const globalAny:any = global;
 const queue:any = []
+globalAny.SMSQueue = queue
 
 const app = express()
 const allowedOrigins = [
@@ -42,16 +44,6 @@ app.get('/sms/toSend', (req, res) => {
             queueItem
         })
     }
-})
-
-app.get('/sms/enqueue/:number/:content', (req, res) => {
-    queue.push({
-        number: req.params.number,
-        content: decodeURIComponent(req.params.content)
-    })
-    res.json({
-        ok: true
-    })
 })
 
 app.get('/data-sources/clients.json', (req, res) => {

@@ -25,7 +25,7 @@ export default {
         return this.userAvatar
       }
 
-      let name = 'somename'
+      let name = 'Dojnaz'
 
       if (this.userName) {
         name = this.userName.replace(/[^a-z0-9]+/i, '')

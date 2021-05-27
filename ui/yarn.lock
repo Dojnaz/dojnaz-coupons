@@ -4894,6 +4894,11 @@ launch-editor@^2.2.1:
     chalk "^2.3.0"
     shell-quote "^1.6.1"
 
+libphonenumber-js@^1.9.19:
+  version "1.9.19"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.9.19.tgz#2e49c86185ed1aa67f2906fb20d752c8837a5c29"
+  integrity sha512-RjStfSE63LvXQEBw7pgQHPkY35z8feiMjC9wLvL1Hbt8PbhxpRrACwMXmLQgabb+IpVdcEx+olh8ll7UDXXkfA==
+
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.npm.taobao.org/lines-and-columns/download/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"

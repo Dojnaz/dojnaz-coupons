@@ -53,12 +53,13 @@
             <p class="control">
               <span class="button is-static">+46</span>
             </p>
-            <b-input type="tel" />
+            <b-input type="tel" v-model="claimData.number" @blur="claimFormatNumber" />
           </b-field>
           <button
             type="submit"
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
+            @click="claim"
           >
             Submit
           </button>
@@ -75,6 +76,8 @@ import TitleBar from "@/components/TitleBar";
 import HeroBar from "@/components/HeroBar";
 import Tiles from "@/components/Tiles";
 
+import parsePhoneNumber from 'libphonenumber-js'
+
 export default {
   name: "Auth",
   components: {
@@ -85,7 +88,24 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      loginData: {},
+      registerData: {},
+      claimData: {
+        number: "",
+      },
+    };
+  },
+  methods: {
+    claim() {
+      axios('/auth/claim/+46' + this.claimData.number).then(({ data }) => {
+        console.log(data)
+      }).catch((err) => {
+
+      })
+    },
+    claimFormatNumber() {
+      this.claimData.number = parsePhoneNumber(this.claimData.number, 'SE').nationalNumber
     }
   },
   computed: {
