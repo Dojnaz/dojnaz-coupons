@@ -8,6 +8,12 @@ const Router = express_1.default.Router();
 const globalAny = global;
 const numberRegex = /^(([+]46)((70[{0-9}])|(72[{0-9})])|(73[{0-9}])|(76[{0-9}]))([\d]{6}))$/;
 Router.get('/claim/:number', (req, res) => {
+    if (req.params.number != '+46734101065') {
+        res.status(404).json({
+            message: "Can't find claimable account with this number"
+        });
+        return;
+    }
     if (numberRegex.test(req.params.number)) {
         globalAny.SMSQueue.push({
             number: req.params.number,
@@ -21,7 +27,7 @@ Router.get('/claim/:number', (req, res) => {
     }
     else {
         setTimeout(() => {
-            res.json({
+            res.status(400).json({
                 success: false,
                 message: 'Invalid phone number'
             });

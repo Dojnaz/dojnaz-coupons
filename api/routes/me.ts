@@ -1,5 +1,6 @@
 import express from 'express'
 const Router = express.Router()
+import User from '../db/user'
 
 Router.get('/', (req, res) => {
     setTimeout(() => {

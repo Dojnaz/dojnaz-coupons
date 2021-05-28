@@ -1,12 +1,21 @@
 <template>
   <div id="app" class="vld-parent">
-    <loading :active="$store.state.isLoading" :can-cancel="false" :is-full-page="true" />
-    <template v-if="$router.currentRoute.path != '/auth'">
+    <loading
+      :active="$store.state.isLoading"
+      :can-cancel="false"
+      :is-full-page="true"
+    />
+    <template
+      v-if="
+        $router.currentRoute.path != '/auth' &&
+        $router.currentRoute.name != 'view'
+      "
+    >
       <nav-bar />
       <aside-menu :menu="menu" @menu-click="menuClick" />
     </template>
     <router-view />
-    <footer-bar />
+    <footer-bar v-if="$router.currentRoute.name != 'view'" />
   </div>
 </template>
 
@@ -104,3 +113,9 @@ export default {
   },
 };
 </script>
+
+<style>
+html {
+  overflow-y: auto !important;
+}
+</style>

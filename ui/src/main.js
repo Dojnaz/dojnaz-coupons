@@ -4,6 +4,7 @@ import store from './store'
 import router from './router'
 import axios from 'axios'
 import Buefy from 'buefy'
+import AsyncComputed from 'vue-async-computed'
 import './registerServiceWorker'
 
 import('@/scss/main.scss')
@@ -27,6 +28,7 @@ router.afterEach(to => {
 Vue.config.productionTip = false
 
 Vue.use(Buefy)
+Vue.use(AsyncComputed)
 
 window.$store = store
 window.$router = router

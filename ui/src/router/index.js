@@ -7,8 +7,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
       title: 'Dashboard',
       requiresAuth: true
@@ -27,7 +25,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tables" */ '../views/Tables.vue')
+    component: () => import(/* webpackChunkName: "Tables" */ '../views/Tables.vue')
   },
   {
     meta: {
@@ -35,7 +33,7 @@ const routes = [
     },
     path: '/coupons/:slug',
     name: 'couponPage',
-    component: () => import(/* webpackChunkName: "couponPage" */ '../views/CouponPage.vue')
+    component: () => import(/* webpackChunkName: "CouponPage" */ '../views/CouponPage.vue')
   },
   {
     meta: {
@@ -44,7 +42,7 @@ const routes = [
     },
     path: '/forms',
     name: 'forms',
-    component: () => import(/* webpackChunkName: "forms" */ '../views/Forms.vue')
+    component: () => import(/* webpackChunkName: "Forms" */ '../views/Forms.vue')
   },
   {
     meta: {
@@ -53,7 +51,7 @@ const routes = [
     },
     path: '/profile',
     name: 'profile',
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
+    component: () => import(/* webpackChunkName: "Profile" */ '../views/Profile.vue')
   },
   {
     meta: {
@@ -61,7 +59,15 @@ const routes = [
     },
     path: '/auth',
     name: 'auth',
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Auth.vue')
+    component: () => import(/* webpackChunkName: "Auth" */ '../views/Auth.vue')
+  },
+  {
+    meta: {
+      title: 'Coupon Viewer'
+    },
+    path: '/view/:code',
+    name: 'view',
+    component: () => import(/* webpackChunkName: "CouponView" */ '../views/CouponView.vue')
   }
 ]
 

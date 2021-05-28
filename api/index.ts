@@ -1,9 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import routes from './routes'
+import dbPromise from './db'
+dbPromise.then(() => {
+    console.log("Connected to database!");
+})
 
-const globalAny:any = global;
-const queue:any = []
+const globalAny: any = global;
+const queue: any = []
 globalAny.SMSQueue = queue
 
 const app = express()

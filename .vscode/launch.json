@@ -8,7 +8,7 @@
             "envFile": "${workspaceFolder}/.env",
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
-                "start"
+                "dev"
             ]
         },
         {
