@@ -26,6 +26,7 @@
           </p>
           <b-field label="Phone Number" key="loginPN" v-if="loginData.isNumber">
             <b-select v-model="loginData.country" placeholder="Country">
+              <option value="GB">+44 🇬🇧</option>
               <option value="SE">+46 🇸🇪</option>
               <option value="DE">+49 🇩🇪</option>
             </b-select>
@@ -104,6 +105,7 @@
             </p>-->
             <!--🇦🇧🇨🇩🇪🇫🇬🇭🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿-->
             <b-select v-model="claimData.country" placeholder="Country">
+              <option value="GB">+44 🇬🇧</option>
               <option value="SE">+46 🇸🇪</option>
               <option value="DE">+49 🇩🇪</option>
             </b-select>
