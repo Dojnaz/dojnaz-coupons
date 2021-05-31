@@ -48,6 +48,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/sms/toSend', (req, res) => {
+  if (!req.headers.authorization || req.headers.authorization != "Bearer " + process.env.SMS_SECRET) {
+    res.status(401).json({
+      message: "Invalid Auth"
+    })
+    return
+  }
   if (queue.length == 0) {
     res.json({
       process: "false"
