@@ -30,12 +30,18 @@ export default new Vuex.Store({
       balance: 69
     },
     isLoading: true,
-    claimToken: null
+    claimToken: null,
+    token: localStorage.token
   },
   mutations: {
     /* A fit-them-all commit */
     basic(state, payload) {
       state[payload.key] = payload.value
+    },
+
+    setToken(state, payload) {
+      state.token = payload
+      localStorage.token = payload
     },
 
     /* User */

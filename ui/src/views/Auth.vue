@@ -19,16 +19,12 @@
           <p class="loginSwitch" @click="toggleUsernameType">
             <a>
               Use
-              <template v-if="loginData.isNumber"> phone number </template>
+              <template v-if="!loginData.isNumber"> phone number </template>
               <template v-else> email </template>
               instead
             </a>
           </p>
-          <b-field
-            label="Phone Number"
-            key="loginPN"
-            v-if="!loginData.isNumber"
-          >
+          <b-field label="Phone Number" key="loginPN" v-if="loginData.isNumber">
             <b-select v-model="loginData.country" placeholder="Country">
               <option value="SE">+46 🇸🇪</option>
               <option value="DE">+49 🇩🇪</option>
@@ -68,13 +64,17 @@
             {{ registerData.errorMessage }}
           </b-message>
           <b-field label="Email">
-            <b-input type="email" v-model="registerData.email" />
+            <b-input type="email" v-model="registerData.email" disabled />
           </b-field>
           <b-field label="Password">
-            <b-input type="password" v-model="registerData.password" />
+            <b-input type="password" v-model="registerData.password" disabled />
           </b-field>
           <b-field label="Repeat Password">
-            <b-input type="password" v-model="registerData.repeatPassword" />
+            <b-input
+              type="password"
+              v-model="registerData.repeatPassword"
+              disabled
+            />
           </b-field>
           <button
             type="submit"
@@ -151,7 +151,7 @@ export default {
     return {
       isLoading: false,
       loginData: {
-        isNumber: false,
+        isNumber: true,
         username: "",
         password: "",
         errorMessage: "",
@@ -176,9 +176,46 @@ export default {
   methods: {
     login() {
       this.isLoading = true;
+      this.loginData.showError = false;
+      let username = this.username;
+      if (this.loginData.isNumber) {
+        const phone = parsePhoneNumber(
+          this.loginData.username,
+          this.loginData.country
+        );
+        if (!phone) {
+          this.isLoading = false;
+          this.loginData.showError = true;
+          this.loginData.errorMessage = "Invalid phone number";
+          return;
+        }
+        username = phone.number;
+      }
+      axios
+        .post("/auth/login", {
+          username,
+          password: this.loginData.password,
+        })
+        .then(({ data }) => {
+          if (!data.token) {
+            this.loginData.showError = true;
+            this.loginData.errorMessage = "An unknown error has occured";
+            return;
+          }
+          $store.commit("setToken", data.token);
+          $router.push("/");
+        })
+        .catch((err) => {
+          this.loginData.showError = true;
+          this.loginData.errorMessage = err.response.data.message;
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     register() {
       this.isLoading = true;
+      this.registerData.showError = false;
     },
     claim() {
       this.isLoading = true;

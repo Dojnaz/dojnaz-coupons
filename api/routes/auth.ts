@@ -16,6 +16,49 @@ const globalAny: any = global;
 const swedishRegex = /^(([+]46)((70[{0-9}])|(72[{0-9})])|(73[{0-9}])|(76[{0-9}]))([\d]{6}))$/
 const germanRegex = /^[+]491\d{9,10}/
 
+Router.post('/login', async (req, res) => {
+  if (!req.body.username || typeof req.body.username != "string" || req.body.username.length < 1) {
+    res.status(400).json({
+      message: "No or invalid username"
+    })
+    return
+  }
+  if (!req.body.password || typeof req.body.password != "string" || req.body.password.length < 6 || req.body.password.length > 64) {
+    res.status(400).json({
+      message: "No or invalid password"
+    })
+    return
+  }
+  const user = await User.findOne({
+    $or: [
+      {
+        email: req.body.username
+      },
+      {
+        number: req.body.username
+      }
+    ],
+    unclaimed: false
+  })
+  if (!user) {
+    res.status(401).json({
+      message: "Credentials doesn't match any of our records"
+    })
+    return
+  }
+  if (await bcrypt.compare(req.body.password, user.password)) {
+    res.json({
+      token: jwt.sign({
+        userId: user._id
+      }, process.env.JWT_SECRET)
+    })
+  } else {
+    res.status(401).json({
+      message: "Credentials doesn't match any of our records"
+    })
+  }
+})
+
 Router.get('/claim/:number', async (req, res) => {
   try {
     if (!swedishRegex.test(req.params.number) && !germanRegex.test(req.params.number)) {
