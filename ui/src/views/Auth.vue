@@ -8,7 +8,38 @@
           icon="login-variant"
           class="tile is-child"
         >
-          <b-field label="Email/Phone Number">
+          <b-message
+            title="Error!"
+            type="is-danger"
+            aria-close-label="Close message"
+            v-model="loginData.showError"
+          >
+            {{ loginData.errorMessage }}
+          </b-message>
+          <p class="loginSwitch" @click="toggleUsernameType">
+            <a>
+              Use
+              <template v-if="loginData.isNumber"> phone number </template>
+              <template v-else> email </template>
+              instead
+            </a>
+          </p>
+          <b-field
+            label="Phone Number"
+            key="loginPN"
+            v-if="!loginData.isNumber"
+          >
+            <b-select v-model="loginData.country" placeholder="Country">
+              <option value="SE">+46 🇸🇪</option>
+              <option value="DE">+49 🇩🇪</option>
+            </b-select>
+            <b-input
+              type="tel"
+              v-model="loginData.username"
+              @blur="loginFormatNumber"
+            />
+          </b-field>
+          <b-field label="Email" key="loginEM" v-else>
             <b-input name="Username" v-model="loginData.username" />
           </b-field>
           <b-field label="Password">
@@ -28,6 +59,14 @@
           icon="account-plus"
           class="tile is-child"
         >
+          <b-message
+            title="Error!"
+            type="is-danger"
+            aria-close-label="Close message"
+            v-model="registerData.showError"
+          >
+            {{ registerData.errorMessage }}
+          </b-message>
           <b-field label="Email">
             <b-input type="email" v-model="registerData.email" />
           </b-field>
@@ -60,9 +99,14 @@
             {{ claimData.errorMessage }}
           </b-message>
           <b-field label="Phone Number">
-            <p class="control">
+            <!--<p class="control">
               <span class="button is-static">+46</span>
-            </p>
+            </p>-->
+            <!--🇦🇧🇨🇩🇪🇫🇬🇭🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿-->
+            <b-select v-model="claimData.country" placeholder="Country">
+              <option value="SE">+46 🇸🇪</option>
+              <option value="DE">+49 🇩🇪</option>
+            </b-select>
             <b-input
               type="tel"
               v-model="claimData.number"
@@ -89,8 +133,10 @@ import CardComponent from "@/components/CardComponent";
 import TitleBar from "@/components/TitleBar";
 import HeroBar from "@/components/HeroBar";
 import Tiles from "@/components/Tiles";
+import TokenClaimModal from "@/components/TokenClaimModal";
 
 import parsePhoneNumber from "libphonenumber-js";
+import Tables from "./Tables.vue";
 
 export default {
   name: "Auth",
@@ -99,6 +145,7 @@ export default {
     HeroBar,
     TitleBar,
     CardComponent,
+    Tables,
   },
   data() {
     return {
@@ -109,6 +156,7 @@ export default {
         password: "",
         errorMessage: "",
         showError: false,
+        country: "SE",
       },
       registerData: {
         email: "",
@@ -121,6 +169,7 @@ export default {
         number: "",
         errorMessage: "",
         showError: false,
+        country: "SE",
       },
     };
   },
@@ -133,22 +182,44 @@ export default {
     },
     claim() {
       this.isLoading = true;
-      axios("/auth/claim/+46" + this.claimData.number)
+      this.claimData.showError = false;
+      const phone = parsePhoneNumber(
+        this.claimData.number,
+        this.claimData.country
+      );
+      if (!phone) {
+        this.isLoading = false;
+        this.claimData.showError = true;
+        this.claimData.errorMessage = "Invalid phone number";
+        return;
+      }
+      axios("/auth/claim/" + phone.number)
         .then(({ data }) => {
           this.isLoading = false;
-          console.log(data);
+          $store.commit("setClaimToken", data.token);
+          this.$buefy.modal.open({
+            parent: this,
+            component: TokenClaimModal,
+            hasModalCard: true,
+            trapFocus: true,
+          });
         })
         .catch((err) => {
-          console.log(err);
           this.isLoading = false;
+          this.claimData.showError = true;
+          this.claimData.errorMessage = err.response.data.message;
         });
     },
 
     claimFormatNumber() {
-      this.claimData.number = parsePhoneNumber(
-        this.claimData.number,
-        "SE"
-      ).nationalNumber;
+      const phone = parsePhoneNumber(this.claimData.number, "SE");
+      if (!phone) return;
+      this.claimData.number = phone.nationalNumber;
+    },
+    loginFormatNumber() {
+      const phone = parsePhoneNumber(this.loginData.username, "SE");
+      if (!phone) return;
+      this.loginData.username = phone.nationalNumber;
     },
     toggleUsernameType() {
       this.loginData.isNumber = !this.loginData.isNumber;
@@ -164,7 +235,7 @@ export default {
 </script>
 
 <style scoped>
-.toggleUsernameType {
+.loginSwitch {
   float: right;
   text-align: center;
 }

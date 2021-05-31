@@ -29,7 +29,8 @@ export default new Vuex.Store({
       claimed: 1337,
       balance: 69
     },
-    isLoading: true
+    isLoading: true,
+    claimToken: null
   },
   mutations: {
     /* A fit-them-all commit */
@@ -46,6 +47,10 @@ export default new Vuex.Store({
         state.userAvatar = payload.avatar
       }
       state.isLoading = false
+    },
+
+    setClaimToken(state, payload) {
+      state.claimToken = payload
     },
 
     /* Aside Mobile */
