@@ -4,6 +4,14 @@ import ClaimToken from '../db/claimToken'
 import jwt from 'jsonwebtoken'
 import bodyParser from 'body-parser'
 import bcrypt from 'bcrypt'
+import redis from 'redis'
+import { promisify } from 'util'
+
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT),
+  password: process.env.REDIS_PASS
+})
 
 const Router = express.Router()
 
@@ -48,10 +56,17 @@ Router.post('/login', async (req, res) => {
     return
   }
   if (await bcrypt.compare(req.body.password, user.password)) {
+    const refresh = jwt.sign({
+      userId: user._id
+    }, process.env.JWT_SECRET)
+    const token = jwt.sign({
+      userId: user._id,
+      exp: Math.floor(Date.now() + 1000 * 60 * 10)
+    }, process.env.JWT_SECRET)
+    redisClient.set(refresh, "valid")
     res.json({
-      token: jwt.sign({
-        userId: user._id
-      }, process.env.JWT_SECRET)
+      refresh,
+      token
     })
   } else {
     res.status(401).json({
