@@ -28,9 +28,17 @@
         />
       </tiles>
 
-      <tiles class="is-centered columns" v-if="$store.state.couponTypes.length == 0">
+      <tiles
+        class="is-centered columns"
+        v-if="$store.state.couponTypes.length == 0"
+      >
         <template>
-          <CouponCard v-for="index in 4" :key="index" :skeleton="true" title="Loading..." />
+          <CouponCard
+            v-for="index in 4"
+            :key="index"
+            :skeleton="true"
+            title="Loading..."
+          />
         </template>
       </tiles>
       <tiles class="is-centered columns">
