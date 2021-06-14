@@ -14,7 +14,7 @@ async function dbPurge() {
       $lt: Date.now() - (60 * 5 * 1000)
     }
   })
-  setTimeout(dbPurge, 60000)
+  setTimeout(dbPurge, 1000 * 60 * 60)
 }
 dbPurge()
 

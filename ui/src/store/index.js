@@ -7,8 +7,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     /* User */
+    name: null,
     userName: null,
+    userEmail: null,
     userAvatar: null,
+    userNumber: null,
 
     /* NavBar */
     isNavBarVisible: true,
@@ -46,11 +49,20 @@ export default new Vuex.Store({
 
     /* User */
     user(state, payload) {
+      if (payload.userName) {
+        state.userName = payload.userName
+      }
       if (payload.name) {
-        state.userName = payload.name
+        state.name = payload.name
       }
       if (payload.avatar) {
         state.userAvatar = payload.avatar
+      }
+      if (payload.email) {
+        state.userEmail = payload.email
+      }
+      if (payload.number) {
+        state.userNumber = payload.number
       }
       state.isLoading = false
     },

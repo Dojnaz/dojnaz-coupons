@@ -30,8 +30,8 @@ export default {
       if (this.userName) {
         name = this.userName.replace(/[^a-z0-9]+/i, '')
       }
-
-      return `https://avatars.dicebear.com/v2/human/${name}.svg?options[mood][]=happy`
+      return null
+      //return `https://avatars.dicebear.com/v2/human/${name}.svg?options[mood][]=happy`
     },
     ...mapState([
       'userAvatar',
