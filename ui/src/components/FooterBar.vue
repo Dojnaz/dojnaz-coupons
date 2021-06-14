@@ -6,6 +6,11 @@
           <div class="level-item">
             <div class="footer-copyright">
               <b>&copy; {{ year }}, Dojnaz HB</b> &mdash; Dojnaz Coupons <span class="tag">v1.4.1</span>
+              <br>
+              <br>
+              <p>Do you need help?</p>
+              <p><b-icon icon="email" custom-size="default"></b-icon> <a href="mailto:vb@dojnaz.net" target="_blank">vb@dojnaz.net</a></p>
+              <p><b-icon icon="android-messages" custom-size="default"></b-icon> <a href="sms:+46734101065" target="_blank">+46734101065</a></p>
             </div>
           </div>
         </div>

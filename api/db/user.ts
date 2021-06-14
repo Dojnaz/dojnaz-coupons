@@ -5,6 +5,7 @@ export interface IUser extends Document {
   number?: string;
   password?: string;
   unclaimed: boolean;
+  name?: string;
 }
 
 const UserSchema: Schema = new Schema({
@@ -18,7 +19,8 @@ const UserSchema: Schema = new Schema({
   unclaimed: {
     type: Boolean,
     default: false
-  }
+  },
+  name: String
 });
 
 export default mongoose.model<IUser>('User', UserSchema);
