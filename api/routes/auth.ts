@@ -22,8 +22,9 @@ const redeemedJWTs: string[] = []
 const globalAny: any = global;
 
 const swedishRegex = /^(([+]46)((70[{0-9}])|(72[{0-9})])|(73[{0-9}])|(76[{0-9}]))([\d]{6}))$/
-const germanRegex = /^[+]491\d{9,10}/
-const ukRegex = /^[+]44\d{7,15}/
+const germanRegex = /^[+]491\d{9,10}$/
+const ukRegex = /^[+]44\d{7,15}$/
+const uscaRegex = /^[+]1\d{8,15}$/
 
 Router.post('/login', async (req, res) => {
   if (!req.body.username || typeof req.body.username != "string" || req.body.username.length < 1) {
@@ -77,7 +78,7 @@ Router.post('/login', async (req, res) => {
 
 Router.get('/claim/:number', async (req, res) => {
   try {
-    if (!swedishRegex.test(req.params.number) && !germanRegex.test(req.params.number) && !ukRegex.test(req.params.number)) {
+    if (!swedishRegex.test(req.params.number) && !germanRegex.test(req.params.number) && !ukRegex.test(req.params.number) && !uscaRegex.test(req.params.number)) {
       setTimeout(() => {
         res.status(400).json({
           success: false,
