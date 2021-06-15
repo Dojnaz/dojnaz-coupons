@@ -1,40 +1,33 @@
 <template>
   <div>
-    <hero-bar :has-right-visible="false"> Authentication </hero-bar>
+    <hero-bar :has-right-visible="false">Authentication</hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component
-          title="Login"
-          icon="login-variant"
-          class="tile is-child"
-        >
+        <card-component title="Login" icon="login-variant" class="tile is-child">
           <b-message
             title="Error!"
             type="is-danger"
             aria-close-label="Close message"
             v-model="loginData.showError"
-          >
-            {{ loginData.errorMessage }}
-          </b-message>
+          >{{ loginData.errorMessage }}</b-message>
           <p class="loginSwitch" @click="toggleUsernameType">
             <a>
               Use
-              <template v-if="!loginData.isNumber"> phone number </template>
-              <template v-else> email </template>
+              <template v-if="!loginData.isNumber">phone number</template>
+              <template v-else>email</template>
               instead
             </a>
           </p>
           <b-field label="Phone Number" key="loginPN" v-if="loginData.isNumber">
+            <!--🇦🇧🇨🇩🇪🇫🇬🇭🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿-->
             <b-select v-model="loginData.country" placeholder="Country">
+              <option value="US">+1 🇺🇸</option>
+              <option value="CA">+1 🇨🇦</option>
               <option value="GB">+44 🇬🇧</option>
               <option value="SE">+46 🇸🇪</option>
               <option value="DE">+49 🇩🇪</option>
             </b-select>
-            <b-input
-              type="tel"
-              v-model="loginData.username"
-              @blur="loginFormatNumber"
-            />
+            <b-input type="tel" v-model="loginData.username" @blur="loginFormatNumber" />
           </b-field>
           <b-field label="Email" key="loginEM" v-else>
             <b-input name="Username" v-model="loginData.username" />
@@ -47,23 +40,15 @@
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
             @click="login"
-          >
-            Submit
-          </button>
+          >Submit</button>
         </card-component>
-        <card-component
-          title="Register"
-          icon="account-plus"
-          class="tile is-child"
-        >
+        <card-component title="Register" icon="account-plus" class="tile is-child">
           <b-message
             title="Error!"
             type="is-danger"
             aria-close-label="Close message"
             v-model="registerData.showError"
-          >
-            {{ registerData.errorMessage }}
-          </b-message>
+          >{{ registerData.errorMessage }}</b-message>
           <b-field label="Email">
             <b-input type="email" v-model="registerData.email" disabled />
           </b-field>
@@ -71,58 +56,42 @@
             <b-input type="password" v-model="registerData.password" disabled />
           </b-field>
           <b-field label="Repeat Password">
-            <b-input
-              type="password"
-              v-model="registerData.repeatPassword"
-              disabled
-            />
+            <b-input type="password" v-model="registerData.repeatPassword" disabled />
           </b-field>
           <button
             type="submit"
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
             @click="register"
-          >
-            Submit
-          </button>
+          >Submit</button>
         </card-component>
-        <card-component
-          title="Claim Account"
-          icon="hand-right"
-          class="tile is-child"
-        >
+        <card-component title="Claim Account" icon="hand-right" class="tile is-child">
           <b-message
             title="Error!"
             type="is-danger"
             aria-close-label="Close message"
             v-model="claimData.showError"
-          >
-            {{ claimData.errorMessage }}
-          </b-message>
+          >{{ claimData.errorMessage }}</b-message>
           <b-field label="Phone Number">
             <!--<p class="control">
               <span class="button is-static">+46</span>
             </p>-->
             <!--🇦🇧🇨🇩🇪🇫🇬🇭🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿-->
             <b-select v-model="claimData.country" placeholder="Country">
+              <option value="US">+1 🇺🇸</option>
+              <option value="CA">+1 🇨🇦</option>
               <option value="GB">+44 🇬🇧</option>
               <option value="SE">+46 🇸🇪</option>
               <option value="DE">+49 🇩🇪</option>
             </b-select>
-            <b-input
-              type="tel"
-              v-model="claimData.number"
-              @blur="claimFormatNumber"
-            />
+            <b-input type="tel" v-model="claimData.number" @blur="claimFormatNumber" />
           </b-field>
           <button
             type="submit"
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
             @click="claim"
-          >
-            Submit
-          </button>
+          >Submit</button>
         </card-component>
       </tiles>
     </section>
@@ -139,6 +108,8 @@ import TokenClaimModal from "@/components/TokenClaimModal";
 
 import parsePhoneNumber from "libphonenumber-js";
 import Tables from "./Tables.vue";
+
+window.parsePhoneNumber = parsePhoneNumber;
 
 export default {
   name: "Auth",
