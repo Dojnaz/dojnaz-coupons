@@ -11,34 +11,20 @@
           type="is-danger"
           aria-close-label="Close message"
           v-model="showError"
-        >
-          {{ errorMessage }}
-        </b-message>
+        >{{ errorMessage }}</b-message>
         <p>
           <b>
             You have been sent an 6-digit code by SMS.
-            <br />
-            The token is valid for 5 minutes
+            <br />The token is valid for 5 minutes
           </b>
         </p>
         <b-field label="Token" key="token">
-          <b-input
-            type="number"
-            v-model="token"
-            placeholder="SMS Token"
-            required
-          >
-          </b-input>
+          <b-input type="number" v-model="token" placeholder="SMS Token" required></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
         <b-button label="Close" @click="$emit('close')" />
-        <b-button
-          label="Claim"
-          :loading="loading"
-          @click="claim"
-          type="is-primary"
-        />
+        <b-button label="Claim" :loading="loading" @click="claim" type="is-primary" />
       </footer>
     </template>
     <template v-else>
@@ -48,47 +34,26 @@
           type="is-danger"
           aria-close-label="Close message"
           v-model="showError"
-        >
-          {{ errorMessage }}
-        </b-message>
+        >{{ errorMessage }}</b-message>
         <b-message
           title="Warning!"
           type="is-warning"
           aria-close-label="Close message"
           v-model="showWarning"
-        >
-          {{ warningMessage }}
-        </b-message>
+        >{{ warningMessage }}</b-message>
         <p>
-          <b> Enter a password </b>
+          <b>Enter a password</b>
         </p>
         <b-field label="Password" key="password">
-          <b-input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            required
-          >
-          </b-input>
+          <b-input type="password" v-model="password" placeholder="Password" required></b-input>
         </b-field>
         <b-field label="Repeat Password" key="passwordRepeat">
-          <b-input
-            type="password"
-            v-model="passwordRepeat"
-            placeholder="Repeat Password"
-            required
-          >
-          </b-input>
+          <b-input type="password" v-model="passwordRepeat" placeholder="Repeat Password" required></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
         <b-button label="Close" @click="$emit('close')" />
-        <b-button
-          label="Claim"
-          :loading="loading"
-          @click="claimFinal"
-          type="is-primary"
-        />
+        <b-button label="Claim" :loading="loading" @click="claimFinal" type="is-primary" />
       </footer>
     </template>
   </div>
@@ -152,14 +117,17 @@ export default {
         }
       }
       this.loading = true;
-      axios.post("/auth/claimFinal/" + $store.state.claimToken, {
-        password: this.password,
-      }).then(({ data }) => {
-        this.$emit('close')
-      }).catch((err) => {
-        console.error(err)
-        console.log(err.response.data)
-      });
+      axios
+        .post("/auth/claimFinal/" + $store.state.claimToken, {
+          password: this.password,
+        })
+        .then(({ data }) => {
+          this.$emit("close");
+        })
+        .catch((err) => {
+          console.error(err);
+          console.log(err.response.data);
+        });
     },
   },
 };
