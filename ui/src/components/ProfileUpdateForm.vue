@@ -12,25 +12,19 @@
             class="button is-primary"
             @click="updateName()"
             :class="{ 'is-loading': isLoading }"
-          >
-            Update
-          </b-button>
+          >Update</b-button>
         </p>
       </b-field>
       <b-field label="E-mail">
         <b-input v-model="form.email" name="email" type="email" readonly />
         <p class="control" key="pNumber" v-if="!form.email">
-          <b-button class="button is-primary" @click="collectDetail('email')">
-            Add
-          </b-button>
+          <b-button class="button is-primary" @click="collectDetail('email')">Add</b-button>
         </p>
       </b-field>
       <b-field label="Phone number">
         <b-input v-model="form.number" name="number" type="tel" readonly />
         <p class="control" key="pNumber" v-if="!form.number">
-          <b-button class="button is-primary" @click="collectDetail('number')">
-            Add
-          </b-button>
+          <b-button class="button is-primary" @click="collectDetail('number')">Add</b-button>
         </p>
       </b-field>
     </form>
@@ -61,7 +55,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["userName", "userEmail", "userNumber"]),
+    ...mapState(["userName", "userEmail", "userNumber", "name"]),
   },
   mounted() {
     this.form.name = this.name;
@@ -92,10 +86,16 @@ export default {
       });
     },
     updateName() {
+      if (!this.form.name || this.form.name.length < 1) return;
       this.isLoading = true;
-      axios.post('/me/name', {
-        name: this.form.name
-      })
+      axios
+        .post("/me/name", {
+          name: this.form.name,
+        })
+        .then(() => {
+          this.$store.dispatch("init");
+          this.isLoading = false;
+        });
     },
   },
   watch: {

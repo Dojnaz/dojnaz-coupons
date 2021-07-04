@@ -118,7 +118,6 @@ export default new Vuex.Store({
       })
     },
     async init({ commit }) {
-      console.log(1)
       if (!localStorage.token) {
         commit('user', {
           name: null

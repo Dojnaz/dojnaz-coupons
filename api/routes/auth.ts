@@ -2,7 +2,6 @@ import express from 'express'
 import User from '../db/user'
 import ClaimToken from '../db/claimToken'
 import jwt from 'jsonwebtoken'
-import bodyParser from 'body-parser'
 import bcrypt from 'bcrypt'
 import redis from 'redis'
 import { promisify } from 'util'
@@ -14,8 +13,6 @@ const redisClient = redis.createClient({
 })
 
 const Router = express.Router()
-
-Router.use(bodyParser.json())
 
 const redeemedJWTs: string[] = []
 

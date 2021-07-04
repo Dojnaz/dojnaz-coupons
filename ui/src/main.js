@@ -5,7 +5,6 @@ import router from './router'
 import axios from 'axios'
 import Buefy from 'buefy'
 import AsyncComputed from 'vue-async-computed'
-import './registerServiceWorker'
 
 import('@/scss/main.scss')
 import('buefy/dist/buefy.css')
@@ -14,6 +13,7 @@ const defaultDocumentTitle = 'Dojnaz Coupons'
 
 window.axios = axios
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
+console.log(process.env)
 
 router.afterEach(to => {
   store.commit('asideMobileStateToggle', false)

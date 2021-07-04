@@ -9,6 +9,7 @@ export interface IUser extends Document {
 }
 
 const UserSchema: Schema = new Schema({
+  name: String,
   email: {
     type: String
   },
@@ -20,7 +21,6 @@ const UserSchema: Schema = new Schema({
     type: Boolean,
     default: false
   },
-  name: String
 });
 
 export default mongoose.model<IUser>('User', UserSchema);
